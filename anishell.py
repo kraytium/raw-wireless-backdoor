@@ -151,4 +151,15 @@ def strToArr(str):
 
 def clear():
     # clear the screen
-    print chr(27) + '[2J'
+    # get operating, get method of clearing screen
+    from platform import system
+    from os import getenv
+    from subprocess import Popen
+    
+    if system() == 'Windows':
+        Popen([getenv('SystemRoot')+'\system32\cls']).wait()
+    
+    elif system() == 'Linux':
+        p = Popen(['/usr/bin/clear']).wait()
+        if p.communicate()[1]:
+            print chr(27) + '[2J'
